@@ -22,22 +22,14 @@ ans <- .Call("BGL_KMST_D",
 }
 
 if (!isGeneric("bfs")) setGeneric("bfs",
-        function( object, node, checkConn=TRUE) standardGeneric("bfs"))
+        function( object, node, checkConn=FALSE) standardGeneric("bfs"))
 
 setMethod("bfs",c("graph", "missing", "missing"),
-  function( object, node, checkConn=TRUE)
-          bfs(object, nodes(object)[1], TRUE))
+  function( object, node, checkConn=FALSE)
+          bfs(object, nodes(object)[1], FALSE))
 
-setMethod("bfs",c("graph", "character", "missing"),
-  function( object, node, checkConn=TRUE)
-          bfs(object, node, TRUE))
-
-setMethod("bfs",c("graph", "character", "logical"),
-  function( object, node, checkConn)
-          bfs(object, node, checkConn))
-
-setMethod("bfs",c("graph", "character", "logical"),
-          function( object, node, checkConn=TRUE) {
+setMethod("bfs",c("graph", "character", "ANY"),
+          function( object, node, checkConn=FALSE) {
               nodvec <- nodes(object)
               if (is.na(startind <- match(node,nodvec)))
                   stop("starting node not found in nodes of graph")
@@ -47,7 +39,7 @@ setMethod("bfs",c("graph", "character", "logical"),
                       stop("graph is not connected")
               }
               nv <- length(nodvec)
-              em <- edgeMatrix(object,duplicates=TRUE)
+              em <- edgeMatrix(object)
               ne <- ncol(em)
               ans <- .Call("BGL_bfs_D", as.integer(nv), as.integer(ne),
                            as.integer(em-1), as.integer(rep(1,ne)),
@@ -59,44 +51,29 @@ setMethod("bfs",c("graph", "character", "logical"),
           })
 
 if (!isGeneric("dfs"))
-   setGeneric("dfs", function(object,node,checkConn=TRUE)
+   setGeneric("dfs", function(object,node,checkConn=FALSE)
               standardGeneric("dfs"))
 
 setMethod("dfs",c("graph", "missing", "missing"),
-          function( object, node, checkConn=TRUE)
-          dfs(object, nodes(object)[1], TRUE))
+          function( object, node, checkConn=FALSE)
+          dfs(object, nodes(object)[1], FALSE))
 
-setMethod("dfs",c("graph", "character", "logical"),
-          function( object, node, checkConn=TRUE) {
+setMethod("dfs",c("graph", "character", "ANY"),
+          function( object, node, checkConn=FALSE) {
               nodvec <- nodes(object)
               if (is.na(startind <- match(node,nodvec)))
-          {
           warning("starting node not found in nodes of graph,\nnodes element 1 used")
-          startind <- 1
-          }
+ if (node != nodvec[1]) warning("starting node supplied but not equal to nodes(g)[1], which will be used instead.")
  if (checkConn)
    {
    if (length(connectedComp(object))>1) stop("graph is not connected")
    }
  nv <- length(nodvec)
- em <- edgeMatrix(object,duplicates=TRUE)
+ em <- edgeMatrix(object)
  ne <- ncol(em)
- if (startind != 1)  # here we rearrange the node references in edgematrix
-   {          # to reflect altered start index
-   tem <- em
-   em[tem == 1] <- startind
-   em[tem == startind] <- 1
-   }
  ans <- .Call("BGL_dfs_D", as.integer(nv), as.integer(ne),
       as.integer(em-1), as.integer(rep(1,ne)),
       PACKAGE="RBGL")
- fixup <- function(x) { 
-    tm <- x;
-    x[tm==(1-1)] <- startind-1
-    x[tm==(startind-1)] <- (1-1)
-    x
-    }
- ans <- lapply(ans, fixup)
  names(ans) <- c("discovered", "finish")
  lapply(ans,function(x)x+1)
 })
@@ -294,29 +271,3 @@ sp.between <- function (g, start, finish)
       }
     ans2
 }
-
-johnson.all.pairs.sp <- function (g) 
-{
-    nv <- length(nodes(g))
-    if (edgemode(g) == "directed") 
-        em <- edgeMatrix(g)
-    else em <- edgeMatrix(g, TRUE)
-    ne <- ncol(em)
-    eW <- unlist(edgeWeights(g))
-    ans <- .Call("BGL_johnson_all_pairs_shortest_paths_D", as.integer(nv), 
-        as.integer(ne), as.integer(em - 1), as.double(eW), PACKAGE="RBGL")
-    tmp <- matrix(ans, nr = length(nodes(g)))
-    dimnames(tmp) <- list(nodes(g), nodes(g))
-    t(tmp)
-}
-
-#transitive.closure <- function (g) 
-#{
-#    nv <- length(nodes(g))
-#    if (edgemode(g) == "directed") 
-#        em <- edgeMatrix(g)
-#    else em <- edgeMatrix(g, TRUE)
-#    ne <- ncol(em)
-#    ans <- .Call("BGL_transitive_closure_D", as.integer(nv), 
-#        as.integer(ne), as.integer(em - 1), PACKAGE="RBGL")
-#}

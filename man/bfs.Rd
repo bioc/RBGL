@@ -2,14 +2,12 @@
 \alias{bfs}
 \alias{dfs}
 \alias{dfs,graph,character,ANY-method}
-\alias{bfs,graph,character,logical-method}
-\alias{bfs,graph,character,missing-method}
+\alias{bfs,graph,character,ANY-method}
 \alias{dfs,graph,missing,missing-method}
 \alias{bfs,graph,missing,missing-method}
 \alias{bfs,graph-method}
 \alias{bfs,graph,character-method}
 \alias{dfs,graph,character-method}
-\alias{dfs,graph,character,logical-method}
 \alias{bfs,graph,ANY,ANY-method}
 \title{ Breadth and Depth-first search }
 \description{
@@ -18,13 +16,12 @@
   routines from the BOOST library.  
 }
 \usage{
-bfs(object, node, checkConn=TRUE)
+bfs(object, node, checkConn=FALSE)
 \S4method{dfs}{object,node,checkConn}(graph)
 \S4method{bfs}{object,node,checkConn}(graph)
 }
 \arguments{
   \item{object}{ instance of class graph from Bioconductor graph class}
-  \item{graph}{ instance of class graph from Bioconductor graph class}
   \item{node}{ node name where search starts -- note that this is ignored
 for dfs }
   \item{checkConn}{ logical indicating whether connectivity of
