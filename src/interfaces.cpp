@@ -1,4 +1,4 @@
-#include "RBGL.hpp"
+#include "RBGL.h"
 
 extern "C" {
 #include <R.h>
@@ -9,9 +9,8 @@ extern "C" {
 /* need a template with C++ linkage for BFS */
 /* adapted from Siek's bfs-example.cpp */
 
-template < typename TimeMap > class bfs_time_visitor
-    : public boost::default_bfs_visitor {
-  typedef typename boost::property_traits < TimeMap >::value_type T;
+template < typename TimeMap > class bfs_time_visitor:public default_bfs_visitor {
+  typedef typename property_traits < TimeMap >::value_type T;
 public:
   bfs_time_visitor(TimeMap tmap, T & t):m_timemap(tmap), m_time(t) { }
   template < typename Vertex, typename Graph >
@@ -23,9 +22,8 @@ public:
   T & m_time;
 };
 
-template < typename TimeMap > class dfs_time_visitor
-    : public boost::default_dfs_visitor {
-  typedef typename boost::property_traits < TimeMap >::value_type T;
+template < typename TimeMap > class dfs_time_visitor:public default_dfs_visitor {
+  typedef typename property_traits < TimeMap >::value_type T;
 public:
   dfs_time_visitor(TimeMap dmap, TimeMap fmap, T & t)
 :  m_dtimemap(dmap), m_ftimemap(fmap), m_time(t) {
@@ -51,15 +49,14 @@ extern "C"
 	{
 	// tsortbCG -- for bioConductor graph objects 
 	  
-    using namespace boost;
-    typedef graph_traits < Graph_dd >::edge_descriptor Edge;
-    typedef graph_traits < Graph_dd >::vertex_descriptor Vertex;
-    Graph_dd g(num_verts_in, num_edges_in, R_edges_in);
-
-    typedef property_map<Graph_dd, vertex_color_t>::type Color;
+	setupGraphTypes
+	setTraits( Graph_dd )
+	setUnweightedDoubleEdges( Graph_dd )
+	
+	typedef property_map<Graph_dd, vertex_color_t>::type Color;
 	graph_traits<Graph_dd>::vertex_iterator viter, viter_end;
 	 
-	typedef std::list<Vertex> tsOrder;
+	typedef list<Vertex> tsOrder;
 	tsOrder tsord;
 	SEXP tsout;
 	
@@ -95,10 +92,9 @@ extern "C"
 	
 //	Rprintf("warning: directed graph supplied; directions ignored.\n");
 	
-    typedef graph_traits < Graph_dd >::edge_descriptor Edge;
-    typedef graph_traits < Graph_dd >::vertex_descriptor Vertex;
-    Graph_dd g(num_verts_in, num_edges_in, R_edges_in, R_weights_in);
-    property_map < Graph_dd, edge_weight_t >::type weight = get(edge_weight, g);
+	setupGraphTypes
+	setTraits( Graph_dd )
+	setWeightedDoubleEdges( Graph_dd )
 	
 	std::vector < Edge > spanning_tree;
 	
@@ -135,10 +131,9 @@ extern "C"
 	{
 	using namespace boost;
 	
-    typedef graph_traits < Graph_ud >::edge_descriptor Edge;
-    typedef graph_traits < Graph_ud >::vertex_descriptor Vertex;
-    Graph_ud g(num_verts_in, num_edges_in, R_edges_in, R_weights_in);
-    property_map < Graph_ud, edge_weight_t >::type weight = get(edge_weight, g);
+	setupGraphTypes
+	setTraits( Graph_ud )
+	setWeightedDoubleEdges( Graph_ud )
 	
 	std::vector < Edge > spanning_tree;
 	
@@ -175,10 +170,9 @@ extern "C"
 	{
 	using namespace boost;
 	
-    typedef graph_traits < Graph_ud >::edge_descriptor Edge;
-    typedef graph_traits < Graph_ud >::vertex_descriptor Vertex;
-    Graph_ud g(num_verts_in, num_edges_in, R_edges_in, R_weights_in);
-    property_map < Graph_ud, edge_weight_t >::type weight = get(edge_weight, g);
+	setupGraphTypes
+	setTraits( Graph_ud )
+	setWeightedDoubleEdges( Graph_ud )
 	
 	std::vector <Vertex> parent;
 	
@@ -199,9 +193,9 @@ extern "C"
 	{
 	using namespace boost;
 	
-    typedef graph_traits < Graph_dd >::edge_descriptor Edge;
-    typedef graph_traits < Graph_dd >::vertex_descriptor Vertex;
-    Graph_dd g(num_verts_in, num_edges_in, R_edges_in, R_weights_in);
+	setupGraphTypes
+	setTraits( Graph_dd )
+	setWeightedDoubleEdges( Graph_dd )
 	
 	typedef graph_traits < Graph_dd >::vertices_size_type size_type;
 	
@@ -243,9 +237,9 @@ extern "C"
 	{
 	using namespace boost;
 	
-    typedef graph_traits < Graph_dd >::edge_descriptor Edge;
-    typedef graph_traits < Graph_dd >::vertex_descriptor Vertex;
-    Graph_dd g(num_verts_in, num_edges_in, R_edges_in, R_weights_in);
+	setupGraphTypes
+	setTraits( Graph_dd )
+	setWeightedDoubleEdges( Graph_dd )
 	
 	typedef graph_traits < Graph_dd >::vertices_size_type size_type;
 	
@@ -298,9 +292,9 @@ extern "C"
 	{
 	using namespace boost;
 	
-    typedef graph_traits < Graph_dd >::edge_descriptor Edge;
-    typedef graph_traits < Graph_dd >::vertex_descriptor Vertex;
-    Graph_dd g(num_verts_in, num_edges_in, R_edges_in, R_weights_in);
+	setupGraphTypes
+	setTraits( Graph_dd )
+	setWeightedDoubleEdges( Graph_dd )
 	
 	int N = num_vertices(g);
 	std::vector<Vertex> p(N);
@@ -332,14 +326,14 @@ extern "C"
 	using namespace boost;
         SEXP outvec;
 	
-    typedef graph_traits < Graph_ud >::edge_descriptor Edge;
-    typedef graph_traits < Graph_ud >::vertex_descriptor Vertex;
-    Graph_ud g(num_verts_in, num_edges_in, R_edges_in, R_weights_in);
+	setupGraphTypes
+	setTraits( Graph_ud )
+	setWeightedDoubleEdges( Graph_ud )
 
 	int nvert = INTEGER(num_verts_in)[0] ;
 
-    std::vector<int> component(num_vertices(g));
-    connected_components(g, &component[0]);
+        std::vector<int> component(num_vertices(g));
+        int num = connected_components(g, &component[0]);
 
     std::vector<int>::size_type k;
     
@@ -359,14 +353,14 @@ extern "C"
 	using namespace boost;
         SEXP outvec;
 	
-    typedef graph_traits < Graph_dd >::edge_descriptor Edge;
-    typedef graph_traits < Graph_dd >::vertex_descriptor Vertex;
-    Graph_dd g(num_verts_in, num_edges_in, R_edges_in, R_weights_in);
+	setupGraphTypes
+	setTraits( Graph_dd )
+	setWeightedDoubleEdges( Graph_dd )
 
 	int nvert = INTEGER(num_verts_in)[0] ;
 
-    std::vector<int> component(num_vertices(g));
-    strong_components(g, &component[0]);
+        std::vector<int> component(num_vertices(g));
+        int num = strong_components(g, &component[0]);
 
     std::vector<int>::size_type k;
     
@@ -384,11 +378,13 @@ extern "C"
 		SEXP R_weights_in )
 	{
 	using namespace boost;
-    SEXP ansList, conn, edTmp;
+        SEXP outvec, ansList, conn, edTmp;
 	
-    typedef graph_traits < Graph_ud >::edge_descriptor Edge;
-    typedef graph_traits < Graph_ud >::vertex_descriptor Vertex;
-    Graph_ud g(num_verts_in, num_edges_in, R_edges_in, R_weights_in);
+	setupGraphTypes
+	setTraits( Graph_ud )
+	setWeightedDoubleEdges( Graph_ud )
+
+	int nvert = INTEGER(num_verts_in)[0] ;
 
     typedef graph_traits<Graph_ud>::degree_size_type dst;
     std::vector<Edge> disconnecting_set;
