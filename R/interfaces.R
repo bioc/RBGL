@@ -814,59 +814,59 @@ same.component <- function (g, node1, node2)
    ans
 }
 
-circle.layout <- function ( g, radius=1 )
-{
-   warning("API is changed: use circleLayout instead.")
-   circleLayout(g, radius)
-}
-
-circleLayout <- function ( g, radius=1 )
-{
-   if (isDirected(g)) stop("only applicable to undirected graphs")
-
-   if ( radius < 0 ) stop("requires: radius > 0 ")
-
-   nv <- length(nodes(g))
-   em <- edgeMatrix(g)
-   ne <- ncol(em)
-
-   ans <- .Call("BGL_circle_layout", 
-	        as.integer(nv), as.integer(ne), as.integer(em-1), 
-		as.double(radius),
-                PACKAGE="RBGL")
-
-   rownames(ans) <- c("x", "y")
-   colnames(ans) <- nodes(g)
-   ans
-}
-
-kamada.kawai.spring.layout <- function ( g, edge_or_side=1, es_length=1 )
-{
-   warning("API is changed: use kamadaKawaiSpringLayout instead.")
-   kamadaKawaiSpringLayout(g, edge_or_side, es_length)
-}
-
-kamadaKawaiSpringLayout <- function ( g, edge_or_side=1, es_length=1 )
-{
-   if (isDirected(g)) stop("only applicable to undirected graphs")
-
-   if ( edge_or_side <= 0 ) stop("requires: es_length > 0")
-
-   nv <- length(nodes(g))
-   em <- edgeMatrix(g)
-   ne <- ncol(em)
-   eW <- unlist(edgeWeights(g))
-
-   ans <- .Call("BGL_kamada_kawai_spring_layout", 
-	       as.integer(nv), as.integer(ne), 
-	       as.integer(em-1), as.double(eW),
-	       as.logical(edge_or_side), as.double(es_length),
-               PACKAGE="RBGL")
-
-   rownames(ans) <- c("x", "y")
-   colnames(ans) <- nodes(g)
-   ans
-}
+#circle.layout <- function ( g, radius=1 )
+#{
+#   warning("API is changed: use circleLayout instead.")
+#   circleLayout(g, radius)
+#}
+#
+#circleLayout <- function ( g, radius=1 )
+#{
+#   if (isDirected(g)) stop("only applicable to undirected graphs")
+#
+#   if ( radius < 0 ) stop("requires: radius > 0 ")
+#
+#   nv <- length(nodes(g))
+#   em <- edgeMatrix(g)
+#   ne <- ncol(em)
+#
+#   ans <- .Call("BGL_circle_layout", 
+#	        as.integer(nv), as.integer(ne), as.integer(em-1), 
+#		as.double(radius),
+#                PACKAGE="RBGL")
+#
+#   rownames(ans) <- c("x", "y")
+#   colnames(ans) <- nodes(g)
+#   ans
+#}
+#
+#kamada.kawai.spring.layout <- function ( g, edge_or_side=1, es_length=1 )
+#{
+#   warning("API is changed: use kamadaKawaiSpringLayout instead.")
+#   kamadaKawaiSpringLayout(g, edge_or_side, es_length)
+#}
+#
+#kamadaKawaiSpringLayout <- function ( g, edge_or_side=1, es_length=1 )
+#{
+#   if (isDirected(g)) stop("only applicable to undirected graphs")
+#
+#   if ( edge_or_side <= 0 ) stop("requires: es_length > 0")
+#
+#   nv <- length(nodes(g))
+#   em <- edgeMatrix(g)
+#   ne <- ncol(em)
+#   eW <- unlist(edgeWeights(g))
+#
+#   ans <- .Call("BGL_kamada_kawai_spring_layout", 
+#	       as.integer(nv), as.integer(ne), 
+#	       as.integer(em-1), as.double(eW),
+#	       as.logical(edge_or_side), as.double(es_length),
+#               PACKAGE="RBGL")
+#
+#   rownames(ans) <- c("x", "y")
+#   colnames(ans) <- nodes(g)
+#   ans
+#}
 
 brandes.betweenness.centrality <- function ( g )
 {
@@ -959,56 +959,56 @@ kingOrdering <- function(g)
    list("kingOrdering is not implemented yet")
 }
 
-randomGraphLayout<- function(g, minX=0, maxX=1, minY=0, maxY=1)
-{
-   if (isDirected(g)) stop("only applicable to undirected graphs")
-
-   if ( minX >= maxX || minY >= maxY )
-      stop("requires: minX < maxX and minY < maxY ")
-
-   nv <- length(nodes(g))
-   em <- edgeMatrix(g)
-   ne <- ncol(em)
-
-   ans <- .Call("BGL_random_layout", 
-	        as.integer(nv), as.integer(ne), as.integer(em-1), 
-		as.double(minX), as.double(maxX),
-		as.double(minY), as.double(maxY),
-                PACKAGE="RBGL")
-
-   rownames(ans) <- c("x", "y")
-   colnames(ans) <- nodes(g)
-   ans
-}
-
-fruchtermanReingoldForceDirectedLayout<- function(g, width=1, height=1)
-{
-   if (isDirected(g)) stop("only applicable to undirected graphs")
-
-   if ( length(connComp(g)) > 1 ) 
-      warning("This implementation doesn't handle disconnected graphs well.")
-
-   if ( width <= 0 || height <= 0 )
-      stop("requires: width > 0 and height > 0 ")
-
-   nv <- length(nodes(g))
-   em <- edgeMatrix(g)
-   ne <- ncol(em)
-
-   ans <- .Call("BGL_FRFD_layout", 
-	        as.integer(nv), as.integer(ne), as.integer(em-1), 
-		as.double(width), as.double(height),
-                PACKAGE="RBGL")
-
-   rownames(ans) <- c("x", "y")
-   colnames(ans) <- nodes(g)
-   ans
-}
-
-gursoyAtunLayout <- function(g)
-{
-   list("gursoyAtunLayout is not implemented yet")
-}
+#randomGraphLayout<- function(g, minX=0, maxX=1, minY=0, maxY=1)
+#{
+#   if (isDirected(g)) stop("only applicable to undirected graphs")
+#
+#   if ( minX >= maxX || minY >= maxY )
+#      stop("requires: minX < maxX and minY < maxY ")
+#
+#   nv <- length(nodes(g))
+#   em <- edgeMatrix(g)
+#   ne <- ncol(em)
+#
+#   ans <- .Call("BGL_random_layout", 
+#	        as.integer(nv), as.integer(ne), as.integer(em-1), 
+#		as.double(minX), as.double(maxX),
+#		as.double(minY), as.double(maxY),
+#                PACKAGE="RBGL")
+#
+#   rownames(ans) <- c("x", "y")
+#   colnames(ans) <- nodes(g)
+#   ans
+#}
+#
+#fruchtermanReingoldForceDirectedLayout<- function(g, width=1, height=1)
+#{
+#   if (isDirected(g)) stop("only applicable to undirected graphs")
+#
+#   if ( length(connComp(g)) > 1 ) 
+#      warning("This implementation doesn't handle disconnected graphs well.")
+#
+#   if ( width <= 0 || height <= 0 )
+#      stop("requires: width > 0 and height > 0 ")
+#
+#   nv <- length(nodes(g))
+#   em <- edgeMatrix(g)
+#   ne <- ncol(em)
+#
+#   ans <- .Call("BGL_FRFD_layout", 
+#	        as.integer(nv), as.integer(ne), as.integer(em-1), 
+#		as.double(width), as.double(height),
+#                PACKAGE="RBGL")
+#
+#   rownames(ans) <- c("x", "y")
+#   colnames(ans) <- nodes(g)
+#   ans
+#}
+#
+#gursoyAtunLayout <- function(g)
+#{
+#   list("gursoyAtunLayout is not implemented yet")
+#}
 
 astarSearch <- function(g)
 {

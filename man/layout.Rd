@@ -7,12 +7,12 @@
 \alias{gursoyAtunLayout}
 \alias{randomGraphLayout}
 
-\title{Layout an undirected graph in 2D}
+\title{Layout an undirected graph in 2D --SUSPENDED June 19 2012}
 
-\description{Layout an undirected graph in 2D}
+\description{Layout an undirected graph in 2D --SUSPENDED June 19 2012}
 
 \usage{
-circleLayout(g, radius=1)
+circleLayout(g, radius=1)  # use Rgraphviz, API changes have led to removal
 kamadaKawaiSpringLayout( g, edge_or_side=1, es_length=1 )
 fruchtermanReingoldForceDirectedLayout(g, width=1, height=1)
 randomGraphLayout(g, minX=0, maxX=1, minY=0, maxY=1)
@@ -38,6 +38,8 @@ randomGraphLayout(g, minX=0, maxX=1, minY=0, maxY=1)
 }
 
 \details{
+June 19 2012 -- these functions have been suspended.
+
 If you want to simply draw a graph, you should consider using package 
 \emph{Rgraphviz}.  The layout options in package \emph{Rgraphviz}: \code{neato},
 \code{circo} and \code{fdp}, correspond to \code{kamadaKawaiSpringLayout}, 

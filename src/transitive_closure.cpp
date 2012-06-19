@@ -13,8 +13,8 @@
 //       #include <boost/graph/graphviz.hpp>
 // since we don't need it, we remove it from RBGL.hpp, everything seems ok.
 
-#include "RBGL.hpp"
 #include <boost/graph/transitive_closure.hpp>
+#include "RBGL.hpp"
 
 extern "C"
 {

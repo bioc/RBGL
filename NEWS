@@ -6,6 +6,7 @@ Transitioning in two directions: first,
   this entails sacrificing layout.cpp at least
   temporarily, use Rgraphviz if possible
 
+
 Nov 30, 2005
 ============
 New functions:
