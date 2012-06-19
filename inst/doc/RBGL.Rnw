@@ -788,31 +788,31 @@ plot(coex, "neato")
 z <- plot(coex, "neato")
 @
 
-The following functions are interfaces to those in BGL, they only calculate 
-the (x, y)-coordinates of the vertices in the graph.  The actual layout is 
-achieved with additional function, we provide an example on how to do so.
+%The following functions are interfaces to those in BGL, they only calculate 
+%the (x, y)-coordinates of the vertices in the graph.  The actual layout is 
+%achieved with additional function, we provide an example on how to do so.
+%
+%Following functions are available:
+%
+%The \Rfunction{randomGraphLayout} function puts the vertices randomly 
+%on a plane;
+%
+%The \Rfunction{circleLayout} function puts the vertices as vertices of 
+%a regular polygon;
+%
+%The \Rfunction{kamadaKawaiSpringLayout} function is for connected, 
+%undirected graphs, it treats the edges as springs and tries to minimize 
+%the energy of the whole system;
+%
+%The \Rfunction{fruchtermanReingoldForceDirectedLayout} function is for 
+%unweighted, undirected, possibly disconnected graphs, it treats the edges 
+%as forces that pull vertices together, no-edges as forces that push 
+%vertices apart, vertices move to a position as environment changes; 
+%initial positions of the vertices are set randomly by calling 
+%\Rfunction{randomGraphLayout}.  Notice that the choice of "width" and 
+%"height" values has dramatic impact on the performance.
 
-Following functions are available:
-
-The \Rfunction{randomGraphLayout} function puts the vertices randomly 
-on a plane;
-
-The \Rfunction{circleLayout} function puts the vertices as vertices of 
-a regular polygon;
-
-The \Rfunction{kamadaKawaiSpringLayout} function is for connected, 
-undirected graphs, it treats the edges as springs and tries to minimize 
-the energy of the whole system;
-
-The \Rfunction{fruchtermanReingoldForceDirectedLayout} function is for 
-unweighted, undirected, possibly disconnected graphs, it treats the edges 
-as forces that pull vertices together, no-edges as forces that push 
-vertices apart, vertices move to a position as environment changes; 
-initial positions of the vertices are set randomly by calling 
-\Rfunction{randomGraphLayout}.  Notice that the choice of "width" and 
-"height" values has dramatic impact on the performance.
-
-<<Layoutdemo2>>=
+<<Layoutdemo2,echo=FALSE,eval=FALSE>>=
 randomGraphLayout(coex)
 circleLayout(coex)
 kamadaKawaiSpringLayout(coex)
@@ -821,10 +821,10 @@ fruchtermanReingoldForceDirectedLayout(coex, 10, 10)
 
 Outputs are the (x, y)-coordinates of the vertices in the layout.
 
-If you want to draw the graphs based on the calculated coordinates, you need 
-an additional function.  The following is an example.
+%If you want to draw the graphs based on the calculated coordinates, you need 
+%an additional function.  The following is an example.
 
-<<Layoutdemo3>>=
+<<Layoutdemo3,echo=FALSE,eval=FALSE>>=
 crudeGraphPlot <- function(g, alg=circleLayout, ...) {
 #
 # the alg parameter is a function that computes the
@@ -848,33 +848,33 @@ crudeGraphPlot(coex)
 crudeGraphPlot(coex, alg=kamadaKawaiSpringLayout, col="green")
 @
 
-<<figlayout1, fig=TRUE, echo=false, results=hide, include=FALSE>>=
+<<figlayout1, fig=TRUE, echo=false, results=hide, include=FALSE,eval=FALSE>>=
 crudeGraphPlot(coex)
 @
 
-<<figlayout2, fig=TRUE, echo=false, results=hide, include=FALSE>>=
+<<figlayout2, fig=TRUE, echo=false, results=hide, include=FALSE,eval=FALSE>>=
 crudeGraphPlot(coex, alg=kamadaKawaiSpringLayout, col="green")
 @
 
-\begin{figure}[tp]
-\begin{center}
-\begin{tabular}{cc}
-\includegraphics[width=0.49\textwidth]{RBGL-figneato} &
-\includegraphics[width=0.49\textwidth]{RBGL-figlayout1} \\
-\includegraphics[width=0.49\textwidth]{RBGL-figlayout2} \\
-\end{tabular}
-\end{center}
-\caption{\label{fig:graphlayout}%
-a) plot(coex, neato).
-b) crudeGraphPlot(coex).
-c) crudeGraphPlot(coex, alg=kamadaKawaiSpringLayout, col="green"). }
-\end{figure}
-
-Call crudeGraphPlot(coex) gives the default circular layout on your graphics device.
-
-Call crudeGraphPlot(coex, alg=kamada.kawai.spring.layout, col="green") shows you the spring layout with green edges, see Figure~\ref{fig:graphlayout}.
-
-
+%\begin{figure}[tp]
+%\begin{center}
+%\begin{tabular}{cc}
+%\includegraphics[width=0.49\textwidth]{RBGL-figneato} &
+%\includegraphics[width=0.49\textwidth]{RBGL-figlayout1} \\
+%\includegraphics[width=0.49\textwidth]{RBGL-figlayout2} \\
+%\end{tabular}
+%\end{center}
+%\caption{\label{fig:graphlayout}%
+%a) plot(coex, neato).
+%b) crudeGraphPlot(coex).
+%c) crudeGraphPlot(coex, alg=kamadaKawaiSpringLayout, col="green"). }
+%\end{figure}
+%
+%Call crudeGraphPlot(coex) gives the default circular layout on your graphics device.
+%
+%Call crudeGraphPlot(coex, alg=kamada.kawai.spring.layout, col="green") shows you the spring layout with green edges, see Figure~\ref{fig:graphlayout}.
+%
+%
 \subsection{Isomorphism}
 
 The \Rfunction{isomorphism} function determines if two graphs are isomorphism, 
