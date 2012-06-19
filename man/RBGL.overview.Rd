@@ -76,14 +76,14 @@ Functions \tab parameters \cr
 \code{\link[RBGL:ordering]{sloan.ordering}} \tab \code{g,w1,w2}\cr
 }
 }
-\section{ LayoutAlgorithms }{
-
-\tabular{ll}{
-Functions \tab parameters \cr 
-\code{\link[RBGL:layout]{circle.layout}} \tab \code{g,radius}\cr
-\code{\link[RBGL:layout]{kamada.kawai.spring.layout}} \tab \code{g,edge_or_side,es_length}\cr
-}
-}
+%\section{ LayoutAlgorithms }{
+%
+%\tabular{ll}{
+%Functions \tab parameters \cr 
+%\code{\link[RBGL:layout]{circle.layout}} \tab \code{g,radius}\cr
+%\code{\link[RBGL:layout]{kamada.kawai.spring.layout}} \tab \code{g,edge_or_side,es_length}\cr
+%}
+%}
 \section{ GraphClustering }{
 \tabular{ll}{
 Functions \tab parameters \cr 
