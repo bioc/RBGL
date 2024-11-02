@@ -1,11 +1,20 @@
 ##Copyright R. Gentleman, 2003, all rights reserved
 
+## Nov 2 2024 -- much is obsolete and getLL has been removed from annotate; getEG was substituted
+## below so that it doesn't show up in code.bioconductor.org 
+## but the code is unrunnable so conditioned not to run at all
+
+if (FALSE) {
 
 library(Biobase)
 library(hgu95av2)
+library(ALL)
+library(affy)
+setMethod("geneNames", "ExpressionSet", function(object)rownames(object))
 
 #load(paste(homedir, "Genetics/Sabina/Data143/ALL.rda", sep="/"))
-load("ALL.rda")
+#load("ALL.rda")
+data(ALL)
 
 Bs <- grep("^B", as.character(ALL$BT))
 
@@ -49,7 +58,7 @@ library(annotate)
 ##FIXME:
 ##didn't handle the NA's here properly!
 ##also need to drop the AFFX* genes!
-gLL <- getLL(gN, "hgu95av2")
+gLL <- getEG(gN, "hgu95av2")
 wh2 <- !duplicated(gLL)
 BNsub <- BNsub[wh2,]
 
@@ -201,3 +210,4 @@ vv <- dijkstra.sp(Bsub.g1, 2)
 print(summary(vv$distances))
 #
 print(sp.between(Bsub.g1, ourTFs[1], ourTFs[2]))
+}
